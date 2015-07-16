@@ -1,4 +1,5 @@
 require 'oauth'
+require 'cgi'
 require 'json'
 require 'yaml'
 
@@ -53,7 +54,8 @@ tweets["statuses"].reverse.each do |tweet|
 	is_retweet = (text[0..3] == "RT @") ? true : false
 
 	if !is_retweet && followers.to_i > MIN_FOLLOWERS
-		post_status_update(status_id, REPLY_STRING)
+		status_msg = "@#{username} #{REPLY_STRING}"
+		post_status_update(status_id, CGI::escape(status_msg))
 		sleep(WAIT_TIME_BETWEEN_POSTS)
 	end
 
