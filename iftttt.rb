@@ -5,6 +5,7 @@ require 'yaml'
 
 MIN_FOLLOWERS = 10
 WAIT_TIME_BETWEEN_POSTS = 3
+DUPLICATE_CHARACTER_TOLERANCE = 50
 
 CONSUMER_KEY = "YOUR_CONSUMER_KEY"
 CONSUMER_SECRET = "YOUR_CONSUMER_SECRET"
@@ -13,6 +14,10 @@ ACCESS_SECRET = "YOUR_ACCESS_SECRET"
 
 SEARCH_STRING = "Tick"
 REPLY_STRING = "Tock"
+
+BLACKLIST = [
+	'Add strings here that you want to blacklist and not reply to with a tweet'
+]
 
 script_status = YAML::load_file "status.yml"
 
@@ -56,6 +61,7 @@ tweets["statuses"].reverse.each do |tweet|
 	if !is_retweet && followers.to_i > MIN_FOLLOWERS
 		status_msg = "@#{username} #{REPLY_STRING}"
 		post_status_update(status_id, CGI::escape(status_msg))
+		BLACKLIST << "#{text[0..DUPLICATE_CHARACTER_TOLERANCE]}"
 		sleep(WAIT_TIME_BETWEEN_POSTS)
 	end
 
