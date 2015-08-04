@@ -3,9 +3,10 @@ require 'cgi'
 require 'json'
 require 'yaml'
 
-MIN_FOLLOWERS = 10
-WAIT_TIME_BETWEEN_POSTS = 3
-DUPLICATE_CHARACTER_TOLERANCE = 50
+MIN_FOLLOWERS = 10					# minimum number of followers a user must have in order to respond to them
+WAIT_TIME_BETWEEN_POSTS = 3			# number of seconds the script should pause in between each tweet
+DUPLICATE_CHARACTER_TOLERANCE = 50	# number of characters to check for duplicate tweets, each duplicate tweet will be skipped.
+									# To turn this off, set to > 140
 
 CONSUMER_KEY = "YOUR_CONSUMER_KEY"
 CONSUMER_SECRET = "YOUR_CONSUMER_SECRET"
@@ -15,6 +16,8 @@ ACCESS_SECRET = "YOUR_ACCESS_SECRET"
 SEARCH_STRING = "Tick"
 REPLY_STRING = "Tock"
 
+# Use the blacklist to automatically skip certain tweets.  If the start of a tweet matches a string in the blacklist, the tweet
+# will be skipped / ignored and not replied to.
 BLACKLIST = [
 	'Add strings here that you want to blacklist and not reply to with a tweet'
 ]
