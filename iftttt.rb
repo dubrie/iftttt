@@ -61,7 +61,7 @@ tweets["statuses"].reverse.each do |tweet|
 	# Eliminate any retweets so as not to have duplicates
 	is_retweet = (text[0..3] == "RT @") ? true : false
 
-	if !is_retweet && followers.to_i > MIN_FOLLOWERS
+	if !is_retweet && followers.to_i >= MIN_FOLLOWERS
 		status_msg = "@#{username} #{REPLY_STRING}"
 		post_status_update(status_id, CGI::escape(status_msg))
 		BLACKLIST << "#{text[0..DUPLICATE_CHARACTER_TOLERANCE]}"
