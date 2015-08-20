@@ -5,6 +5,7 @@ require 'yaml'
 
 MIN_FOLLOWERS = 10					# minimum number of followers a user must have in order to respond to them
 WAIT_TIME_BETWEEN_POSTS = 3			# number of seconds the script should pause in between each tweet
+SEARCH_COUNT = 15					# number of tweets to return when searching. Default is 15, max is 100 (defined by Twitter API)
 DUPLICATE_CHARACTER_TOLERANCE = 50	# number of characters to check for duplicate tweets, each duplicate tweet will be skipped.
 									# To turn this off, set to > 140
 
@@ -47,7 +48,7 @@ end
 access_token = prepare_access_token(ACCESS_TOKEN, ACCESS_SECRET)
  
 # use the access token as an agent to get the home timeline
-response = access_token.request(:get, "https://api.twitter.com/1.1/search/tweets.json?q=#{SEARCH_STRING}&since_id=#{script_status['since_id']}")
+response = access_token.request(:get, "https://api.twitter.com/1.1/search/tweets.json?q=#{SEARCH_STRING}&since_id=#{script_status['since_id']}&count=#{SEARCH_COUNT}")
 
 tweets = JSON.parse(response.body)
 tweets["statuses"].reverse.each do |tweet|
